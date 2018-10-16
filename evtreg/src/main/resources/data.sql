@@ -1,0 +1,1 @@
+insert into availability values(1, true, '2018-10-16');
