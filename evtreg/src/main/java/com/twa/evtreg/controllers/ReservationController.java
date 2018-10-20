@@ -1,16 +1,13 @@
 package com.twa.evtreg.controllers;
 
-import com.twa.evtreg.models.Reservation;
+import com.twa.evtreg.models.entities.Reservation;
 import com.twa.evtreg.models.dto.*;
 import com.twa.evtreg.services.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/reservation")
@@ -30,6 +27,11 @@ public class ReservationController {
         return new AvailabilitySearchRes(req.getStart(), req.getEnd(), dates);
     }
 
+    @RequestMapping(value = "/available-dates", method = RequestMethod.GET)
+    public AvailabilitySearchRes getAvailableDatesFor() {
+        return service.getAvailableDates();
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<ReservationRes> list() {
         List<ReservationRes> res = new ArrayList<>();
@@ -43,14 +45,33 @@ public class ReservationController {
     }
 
     /**
-     * TODO: Validate whether the dates are still available
-     * TODO: Check if this method can be multi-threaded
+     * Book a reservation. Handles race condition.
      * @param req
      * @return
      */
     @RequestMapping(value = "/book", method = RequestMethod.POST)
     public ReservationRes book(@Valid @RequestBody ReservationReq req) {
-        Reservation res = service.book(req);
+        service.validate(req);
+        service.lock();
+        Reservation res;
+        try {
+            res = service.book(req);
+        } finally {
+            service.unlock();
+        }
+        return new ReservationRes(res);
+    }
+
+    /**
+     * Book a reservation. Doesn't handle race condition.
+     * @param req
+     * @return
+     */
+    @RequestMapping(value = "/book-faulty", method = RequestMethod.POST)
+    public ReservationRes bookFaulty(@Valid @RequestBody ReservationReq req) {
+        service.validate(req);
+        Reservation res;
+        res = service.book(req);
         return new ReservationRes(res);
     }
 
@@ -63,7 +84,14 @@ public class ReservationController {
     @RequestMapping(value = "/change/{id}", method = RequestMethod.PUT)
     public ReservationRes change(@PathVariable("id") Long id, @Valid @RequestBody ReservationReq req) {
         req.setId(id);
-        Reservation res = service.update(req);
+        service.validateExisting(req);
+        service.lock();
+        Reservation res;
+        try {
+            res = service.update(req);
+        } finally {
+            service.unlock();
+        }
         return new ReservationRes(res);
     }
 
@@ -76,5 +104,27 @@ public class ReservationController {
     public BasicRes cancel(@PathVariable("id") Long id) {
         Boolean flag = service.cancel(id);
         return new BasicRes(flag, flag ? "Successfully cancelled reservation!" : "Unable to cancel reservation", null);
+    }
+
+    /**
+     * Acquires the Semaphore lock.
+     * Used to demo other APIs' availability while Book/Update Reservation might have locked access to handle race condition.
+     * @return
+     */
+    @RequestMapping(value = "/lock", method = RequestMethod.GET)
+    public BasicRes lock() {
+        service.lock();
+        return new BasicRes(true, "Locked Semaphore", null);
+    }
+
+    /**
+     * Releases the Semaphore lock.
+     * Used to demo other APIs' availability while Book/Update Reservation might have locked access to handle race condition.
+     * @return
+     */
+    @RequestMapping(value = "/unlock", method = RequestMethod.GET)
+    public BasicRes unlock() {
+        service.unlock();
+        return new BasicRes(true, "Unlocked Semaphore", null);
     }
 }

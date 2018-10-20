@@ -1,9 +1,6 @@
-package com.twa.evtreg.models;
+package com.twa.evtreg.models.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,6 +9,8 @@ public class Availability {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Boolean isAvailable;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date venueDate;
 
     public Availability() {}

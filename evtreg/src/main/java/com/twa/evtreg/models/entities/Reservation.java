@@ -1,13 +1,11 @@
-package com.twa.evtreg.models;
+package com.twa.evtreg.models.entities;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -24,10 +22,12 @@ public class Reservation {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Arrival Date must not be blank!")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date arrivalDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "Departure Date must not be blank!")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date departureDate;
 
     public Reservation() {}
@@ -38,6 +38,18 @@ public class Reservation {
         this.name = name;
         this.arrivalDate = arrivalDate;
         this.departureDate = departureDate;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Reservation anotherReservation = (Reservation) obj;
+        return this.id.equals(anotherReservation.id) && this.name.equals(anotherReservation.name) && this.email.equals(anotherReservation.email) && this.areReservationDatesEqual(anotherReservation);
+    }
+
+    public boolean areReservationDatesEqual(Reservation anotherReservation) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormatter.format(this.arrivalDate).equals(dateFormatter.format(anotherReservation.arrivalDate)) &&
+                dateFormatter.format(this.departureDate).equals(dateFormatter.format(anotherReservation.departureDate));
     }
 
     public Long getId() {
