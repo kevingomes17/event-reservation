@@ -11,7 +11,7 @@
 			"name": "Available Dates Date Range",
 			"request": {
 				"url": {
-					"raw": "http://localhost:8080/reservation/available-dates?start=2018-10-15&end=2018-10-30",
+					"raw": "http://localhost:8080/reservation/available-dates?start=2018-02-12&end=2018-02-12",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -24,13 +24,13 @@
 					"query": [
 						{
 							"key": "start",
-							"value": "2018-10-15",
+							"value": "2018-02-12",
 							"equals": true,
 							"description": ""
 						},
 						{
 							"key": "end",
-							"value": "2018-10-30",
+							"value": "2018-02-12",
 							"equals": true,
 							"description": ""
 						}
@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"body": {},
-				"description": ""
+				"description": null
 			},
 			"response": []
 		},
@@ -98,7 +98,7 @@
 		{
 			"name": "Cancel Reservation",
 			"request": {
-				"url": "http://localhost:8080/reservation/cancel/32",
+				"url": "http://localhost:8080/reservation/cancel/31",
 				"method": "DELETE",
 				"header": [],
 				"body": {},
