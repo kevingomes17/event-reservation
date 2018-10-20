@@ -1,0 +1,143 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Event Reservation",
+		"_postman_id": "bf5c274e-00f8-04ad-7850-342d744e1a56",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Available Dates Date Range",
+			"request": {
+				"url": {
+					"raw": "http://localhost:8080/reservation/available-dates?start=2018-10-15&end=2018-10-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						"available-dates"
+					],
+					"query": [
+						{
+							"key": "start",
+							"value": "2018-10-15",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "end",
+							"value": "2018-10-30",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Available Dates No Date Range",
+			"request": {
+				"url": "http://localhost:8080/reservation/available-dates",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Book Reservation",
+			"request": {
+				"url": "http://localhost:8080/reservation/book",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"John Dore\",\n\t\"email\": \"john@doe.com\",\n\t\"arrivalDate\": \"2018-10-23\",\n\t\"departureDate\": \"2018-10-26\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Change Reservation",
+			"request": {
+				"url": "http://localhost:8080/reservation/change/31",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"John Dore\",\n\t\"email\": \"john@doe.com\",\n\t\"arrivalDate\": \"2018-10-21\",\n\t\"departureDate\": \"2018-10-22\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Reservation",
+			"request": {
+				"url": "http://localhost:8080/reservation/cancel/32",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "View Reservations",
+			"request": {
+				"url": "http://localhost:8080/reservation/list",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Lock Booking",
+			"request": {
+				"url": "http://localhost:8080/reservation/lock",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Unlock Booking",
+			"request": {
+				"url": "http://localhost:8080/reservation/unlock",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
