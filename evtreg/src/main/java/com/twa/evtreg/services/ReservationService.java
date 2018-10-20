@@ -213,10 +213,14 @@ public class ReservationService {
         Date today = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(today);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         for (int i = 0;i < 30;i++) {
             cal.add(Calendar.DATE, 1);
             this.availabilityRepo.save(
-                new Availability(null, this.resetTime(cal.getTime()), true)
+                new Availability(null, cal.getTime(), true)
             );
         }
 
