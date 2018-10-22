@@ -37,8 +37,6 @@ Follow the click path in the screenshot below to execute the Integration Tests. 
 This being a relatively small project, the code is self explanatory. However, I've integrated the appropriate library to auto generate Swagger spec v2. The JSON specification for the API is then rendered via the Swagger UI. See below screenshot. 
 ![Swagger V2 API Documentation](/screenshots/SwaggerEditor.png?raw=true "Swagger V2 API Documentation")
 
-*TODO: Update the Swagger Annotations in code to generate a much cleaner documentation.*
-
 ### Steps
 * Open the online Swagger Editor by navigating to the following URL https://editor.swagger.io/
 * Import the REST API Swagger v2 JSON (event-reservation-api-swagger-v2.json), included in the codebase and view the Documentation UI; where you interact with the REST APIs without having to open up postman.
