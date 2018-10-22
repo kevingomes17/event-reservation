@@ -1,7 +1,7 @@
 # Event Reservation REST API
 
 ## Introduction
-Codebase is located in the "evtreg" folder. Instructions for Developers with Screenshots is in the "Dev Instructions - Event Reservation.pdf" as well.
+Codebase is located in the "evtreg" folder. Instructions for Developers with Screenshots is in the "Dev Instructions - Event Reservation.pdf" as well. However, this README is more up-to-date.
 
 ## Technology
 * Java Version: 1.8
@@ -35,7 +35,7 @@ Follow the click path in the screenshot below to execute the Integration Tests. 
 
 ## API Documentation
 This being a relatively small project, the code is self explanatory. However, I've integrated the appropriate library to auto generate Swagger spec v2. The JSON specification for the API is then rendered via the Swagger UI. See below screenshot. 
-![Swagger V2 API Documentation](/screenshots/SwaggerEditor.png?raw=true "Swagger V2 API Documentation")
+![Swagger V2 API Documentation](/screenshots/SwaggerEditorV2.png?raw=true "Swagger V2 API Documentation")
 
 ### Steps
 * Open the online Swagger Editor by navigating to the following URL https://editor.swagger.io/
